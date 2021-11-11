@@ -3,6 +3,7 @@ package com.example.acount_cuit_pet.component.exception
 import com.example.acount_cuit_pet.component.api.ApiResponse
 import com.example.acount_cuit_pet.component.api.ApiResult
 import lombok.extern.slf4j.Slf4j
+import org.springframework.validation.BindException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -44,5 +45,13 @@ class ExceptionHandlerController {
     @ResponseBody
     fun projectExceptionHandler(exception: ProjectException): ApiResult<String> {
         return baseHandler(exception, exception.apiResponse)
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = [BindException::class])
+    fun validExceptionHandler(bindException: BindException):ApiResult<String>{
+        val pos = getPos(bindException)
+        val message = bindException.bindingResult.allErrors[0].defaultMessage?:bindException.message
+        return ApiResult.error(pos, message,ApiResponse.PARAM_ERROR)
     }
 }
