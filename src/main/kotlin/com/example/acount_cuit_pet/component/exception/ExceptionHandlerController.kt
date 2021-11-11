@@ -31,6 +31,7 @@ class ExceptionHandlerController {
         val pos = getPos(e)
         e.printStackTrace()
         val message = if (e.message.isNullOrEmpty()) "未知错误" else e.message
+
         return ApiResult.error(pos, message!!, apiCode)
     }
 
