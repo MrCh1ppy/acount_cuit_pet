@@ -31,7 +31,6 @@ class ExceptionHandlerController {
         val pos = getPos(e)
         e.printStackTrace()
         val message = if (e.message.isNullOrEmpty()) "未知错误" else e.message
-
         return ApiResult.error(pos, message!!, apiCode)
     }
 
@@ -51,9 +50,9 @@ class ExceptionHandlerController {
     //validation异常处理
     @ResponseBody
     @ExceptionHandler(value = [BindException::class])
-    fun validExceptionHandler(bindException: BindException):ApiResult<String>{
+    fun validExceptionHandler(bindException: BindException): ApiResult<String> {
         val pos = getPos(bindException)
-        val message = bindException.bindingResult.allErrors[0].defaultMessage?:bindException.message
-        return ApiResult.error(pos, message,ApiResponse.PARAM_ERROR)
+        val message = bindException.bindingResult.allErrors[0].defaultMessage ?: bindException.message
+        return ApiResult.error(pos, message, ApiResponse.PARAM_ERROR)
     }
 }

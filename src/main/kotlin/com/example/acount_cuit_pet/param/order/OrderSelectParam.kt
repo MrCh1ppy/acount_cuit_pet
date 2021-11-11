@@ -9,7 +9,7 @@ import lombok.Value
 @Value
 class OrderSelectParam @Builder constructor(
     pageSize: Int,
-    current:  Int,
+    current: Int,
     var peopleName: String?,
     var isDonation: Boolean?,
     var month: Int?, var year: Int?,

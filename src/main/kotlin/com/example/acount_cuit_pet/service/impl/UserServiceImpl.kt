@@ -58,11 +58,11 @@ class UserServiceImpl : UserService {
             ERROR_USERNAME -> LoginVo(msg = "用户名错误")
             ERROR_PASSWORD -> LoginVo(msg = "密码错误")
             ERROR_PARAM -> LoginVo(msg = "参数丢失")
-            SUCCESS ->{
-                var res="normal"
+            SUCCESS -> {
+                var res = "normal"
                 val loginId = StpUtil.getLoginId()
                 if (loginId is LoginId) {
-                    res=loginId.identity?:"normal"
+                    res = loginId.identity ?: "normal"
                 }
                 LoginVo(
                     tokenValue = StpUtil.getTokenValue(),
@@ -90,7 +90,7 @@ class UserServiceImpl : UserService {
         if (userLoginParam.username == null) {
             return ERROR_PARAM
         }
-        val user = userDao.findByUsername(userLoginParam.username)?:return ERROR_USERNAME
+        val user = userDao.findByUsername(userLoginParam.username) ?: return ERROR_USERNAME
         if (user.passwordMd5 != SaSecureUtil.md5(userLoginParam.password)) {
             return ERROR_PASSWORD
         }

@@ -52,7 +52,7 @@ class UserController {
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody  @NotNull @Valid param: UserLoginParam): ApiResult<LoginVo> {
+    fun login(@RequestBody @NotNull @Valid param: UserLoginParam): ApiResult<LoginVo> {
         return ApiResult.ok(userService.login(param))
     }
 }

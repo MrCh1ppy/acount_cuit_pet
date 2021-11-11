@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 class AcountCuitPetApplicationTests {
     @Autowired
     lateinit var userService: UserService
+
     @Autowired
     lateinit var userDao: UserDao
 
@@ -27,7 +28,7 @@ class AcountCuitPetApplicationTests {
 
 
     @Test
-    fun userDaotest(){
+    fun userDaotest() {
         val user = userDao.getByUsername("admin")
         println(user)
     }
