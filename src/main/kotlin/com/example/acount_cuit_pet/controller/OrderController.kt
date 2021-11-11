@@ -16,10 +16,7 @@ import io.swagger.v3.oas.annotations.Operation
 import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 import java.time.ZoneId
 import javax.validation.constraints.NotNull
@@ -34,7 +31,7 @@ class OrderController : ControllerHelper {
 
     @PostMapping("/query")
     @Operation(description = "查询订单")
-    fun select(@Validated @NotNull param: OrderSelectParam): ApiResult<OrderPageVo> {
+    fun select(@RequestBody @Validated @NotNull param: OrderSelectParam): ApiResult<OrderPageVo> {
         return ApiResult.ok(orderService.selectPage(param))
     }
 
@@ -42,7 +39,7 @@ class OrderController : ControllerHelper {
     @Operation(description = "存储订单")
     @Throws(ProjectException::class)
     @SaCheckLogin
-    fun save(@Validated @NotNull param: OrderSaveParam): ApiResult<OrderVo> {
+    fun save(@RequestBody @Validated @NotNull param: OrderSaveParam): ApiResult<OrderVo> {
         val order: ProjectOrder? = orderService.save(param)
         log.info("{}已被存储", order)
         return ApiResult.ok(order?.getVo())
@@ -58,7 +55,7 @@ class OrderController : ControllerHelper {
 
     @SaCheckLogin
     @PostMapping("/update")
-    fun update(@Validated @NotNull param: OrderUpdateParam): ApiResult<OrderVo> {
+    fun update(@RequestBody @Validated @NotNull param: OrderUpdateParam): ApiResult<OrderVo> {
         val apply = ProjectOrder().apply {
             this.peopleName = param.peopleName
             this.donation = param.isDonation

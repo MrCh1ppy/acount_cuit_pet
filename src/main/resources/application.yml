@@ -10,7 +10,7 @@ spring:
       max-lifetime: 500000
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   redis:
     host: 47.98.206.89
 

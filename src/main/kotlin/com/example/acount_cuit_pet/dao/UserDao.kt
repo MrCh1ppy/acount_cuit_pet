@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
 interface UserDao : JpaRepository<ProjectUser, Int>, JpaSpecificationExecutor<ProjectUser> {
     fun findByUsername(username: String): ProjectUser?
+    fun getByUsername(username: String):ProjectUser?
 }
