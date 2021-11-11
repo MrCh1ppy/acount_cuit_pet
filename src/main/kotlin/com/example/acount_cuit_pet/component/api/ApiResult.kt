@@ -7,7 +7,7 @@ class ApiResult<T> private constructor(
 ) {
     companion object {
         fun <T> get(apiCode: ApiResponse, data: T?, msg: String): ApiResult<T> {
-            return ApiResult(apiCode.ordinal, data, msg)
+            return ApiResult(apiCode.code, data, msg)
         }
 
         fun <T> ok(data: T?, msg: String = "操作成功"): ApiResult<T> {
