@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @Slf4j
 class ExceptionHandlerController {
 
-    fun getPos(e: Exception): String {
+    private fun getPos(e: Exception): String {
         return if (e.stackTrace.isNotEmpty()) {
             val stackTraceElement = e.stackTrace[0]
             val filerName = if (stackTraceElement.fileName == null) {
@@ -47,6 +47,7 @@ class ExceptionHandlerController {
         return baseHandler(exception, exception.apiResponse)
     }
 
+    //validation异常处理
     @ResponseBody
     @ExceptionHandler(value = [BindException::class])
     fun validExceptionHandler(bindException: BindException):ApiResult<String>{
