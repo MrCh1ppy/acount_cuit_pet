@@ -9,7 +9,7 @@ class SatokenConfig {
 
     fun getSaTokenConfig(): SaTokenConfig? {
         return SaTokenConfig().apply {
-            tokenName = "satoken"
+            tokenName = "token"
             timeout = TimeUnit.MINUTES.toMillis(20)
             activityTimeout = -1
             isConcurrent = true

@@ -1,7 +1,6 @@
 package com.example.acount_cuit_pet
 
 import com.example.acount_cuit_pet.dao.UserDao
-import com.example.acount_cuit_pet.entity.ProjectUser
 import com.example.acount_cuit_pet.service.UserService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,16 +14,7 @@ class AcountCuitPetApplicationTests {
     @Autowired
     lateinit var userDao: UserDao
 
-    @Test
-    fun contextLoads() {
-        val apply = ProjectUser().apply {
-            this.identity = "admin"
-            this.username = "admin"
-            this.nickname = "admin"
-            this.passwordMd5 = "admin"
-        }
-        userService.save(apply)
-    }
+
 
 
     @Test
