@@ -1,0 +1,17 @@
+server:
+  port: 8084
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: cuit_pet_acount
+    password: pd2TaPm56BPDP5FP
+    url: jdbc:mysql://47.98.206.89:3306/cuit_pet_acount
+    hikari:
+      max-lifetime: 500000
+  jpa:
+    hibernate:
+      ddl-auto: create
+  redis:
+    host: 47.98.206.89
+
+
