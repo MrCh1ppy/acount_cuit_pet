@@ -31,6 +31,7 @@ class OrderController : ControllerHelper {
 
     @PostMapping("/query")
     @Operation(description = "查询订单")
+    @SaCheckLogin
     fun select(@RequestBody @Validated @NotNull param: OrderSelectParam): ApiResult<OrderPageVo> {
         return ApiResult.ok(orderService.selectPage(param))
     }

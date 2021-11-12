@@ -1,9 +1,11 @@
 package com.example.acount_cuit_pet.entity
 
 import com.example.acount_cuit_pet.vo.UserVo
+import lombok.EqualsAndHashCode
 import javax.persistence.*
 
 @Entity
+@EqualsAndHashCode
 class ProjectUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,5 +24,9 @@ class ProjectUser {
             nickname = this.nickname ?: "未定义昵称",
             identity = this.identity ?: "未定义身份"
         )
+    }
+
+    override fun toString(): String {
+        return "ProjectUser(id=$id, version=$version, username=$username, passwordMd5=$passwordMd5, nickname=$nickname, identity=$identity)"
     }
 }

@@ -37,9 +37,9 @@ class OrderSelectSpecification constructor(param: OrderSelectParam) :
             )
         }
         if (param.minMoney != null || param.maxMoney != null) {
-            val minValue = if (param.minMoney == null) Double.MIN_VALUE else param.minMoney
-            val maxValue = if (param.maxMoney == null) Double.MAX_VALUE else param.maxMoney
-            predicateList.add(criteriaBuilder.between(root["money"], minValue!!, maxValue!!))
+            val minValue=param.minMoney?:Double.MIN_VALUE
+            val maxValue = param.maxMoney?:Double.MAX_VALUE
+            predicateList.add(criteriaBuilder.between(root["money"], minValue, maxValue))
         }
         if (param.month != null && param.year != null) {
             val min: LocalDate = LocalDate.of(param.year!!, param.month!!, 1)

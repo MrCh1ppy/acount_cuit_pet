@@ -29,4 +29,8 @@ class ProjectOrder {
             title = title
         )
     }
+
+    override fun toString(): String {
+        return "ProjectOrder(id=$id, money=$money, peopleName=$peopleName, donation=$donation, date=$date, title=$title, version=$version)"
+    }
 }
