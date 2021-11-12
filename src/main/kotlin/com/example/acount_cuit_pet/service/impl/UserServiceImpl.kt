@@ -8,8 +8,6 @@ import com.example.acount_cuit_pet.dao.UserDao
 import com.example.acount_cuit_pet.entity.ProjectUser
 import com.example.acount_cuit_pet.param.user.UserLoginParam
 import com.example.acount_cuit_pet.param.user.UserSelectParam
-import com.example.acount_cuit_pet.response.user.UserLoginResponse
-import com.example.acount_cuit_pet.response.user.UserLoginResponse.*
 import com.example.acount_cuit_pet.service.UserService
 import com.example.acount_cuit_pet.vo.LoginVo
 import com.example.acount_cuit_pet.vo.UserVo
@@ -54,23 +52,13 @@ class UserServiceImpl : UserService {
     }
 
     override fun login(userLoginParam: UserLoginParam): LoginVo {
-        return when (loginPrivate(userLoginParam)) {
-            ERROR_USERNAME -> LoginVo(msg = "用户名错误")
-            ERROR_PASSWORD -> LoginVo(msg = "密码错误")
-            ERROR_PARAM -> LoginVo(msg = "参数丢失")
-            SUCCESS -> {
-                var res = "normal"
-                val loginId = StpUtil.getLoginId()
-                if (loginId is LoginId) {
-                    res = loginId.identity ?: "normal"
-                }
-                LoginVo(
-                    tokenValue = StpUtil.getTokenValue(),
-                    tokenName = StpUtil.getTokenName(),
-                    identity = res
-                )
-            }
+        val (username, password) = userLoginParam
+        val byUsername = userDao.findByUsername(username)?:return LoginVo(null,null,null,"无对应用户名")
+        if(SaSecureUtil.md5(password)!=byUsername.passwordMd5){
+            return LoginVo(null,null,null,"密码错误")
         }
+        StpUtil.login(LoginId(byUsername.identity))
+        return LoginVo(StpUtil.getTokenValue(),StpUtil.getTokenName(),byUsername.identity,"登陆成功")
     }
 
     private fun privateSelect(userSelectParam: UserSelectParam): Page<ProjectUser> {
@@ -84,17 +72,5 @@ class UserServiceImpl : UserService {
             .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains())
         val example = Example.of(projectUser, matcher)
         return userDao.findAll(example, userSelectParam.toPageRequest())
-    }
-
-    private fun loginPrivate(userLoginParam: UserLoginParam): UserLoginResponse {
-        if (userLoginParam.username == null) {
-            return ERROR_PARAM
-        }
-        val user = userDao.findByUsername(userLoginParam.username) ?: return ERROR_USERNAME
-        if (user.passwordMd5 != SaSecureUtil.md5(userLoginParam.password)) {
-            return ERROR_PASSWORD
-        }
-        StpUtil.login(user.identity)
-        return SUCCESS
     }
 }

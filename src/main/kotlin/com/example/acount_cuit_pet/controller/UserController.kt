@@ -58,9 +58,9 @@ class UserController {
     }
 
     @GetMapping("/logOut")
+    @SaCheckLogin
     fun loginOut():ApiResult<String>{
-        val lId = StpUtil.getLoginId()?:null
-        StpUtil.logout(lId)
+        StpUtil.logout()
         return ApiResult.ok("注销成功")
     }
 }

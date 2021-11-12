@@ -63,12 +63,12 @@ class OrderServiceImpl : OrderService {
                             entryValue += it
                         }
                     }
-                    mutableList.add(PeopleGroupVo().apply {
-                        this.money = entryValue
-                        this.name = order.peopleName
-                    })
                 }
             }
+            mutableList.add(PeopleGroupVo().apply {
+                this.money = entryValue
+                this.name = entry.key
+            })
         }
         return OrderPageVo().apply {
             this.res = res
