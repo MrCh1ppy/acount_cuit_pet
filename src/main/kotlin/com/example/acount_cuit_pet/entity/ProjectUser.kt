@@ -22,7 +22,8 @@ class ProjectUser {
         return UserVo(
             username = this.username ?: "未定义用户名",
             nickname = this.nickname ?: "未定义昵称",
-            identity = this.identity ?: "未定义身份"
+            identity = this.identity ?: "未定义身份",
+            id=this.id?:-1
         )
     }
 

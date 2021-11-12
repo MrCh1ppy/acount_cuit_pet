@@ -26,7 +26,8 @@ class ProjectOrder {
             money = money,
             peopleName = peopleName,
             isDonation = donation,
-            title = title
+            title = title,
+            id=id
         )
     }
 
