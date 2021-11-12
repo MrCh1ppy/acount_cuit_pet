@@ -6,5 +6,6 @@ import io.swagger.annotations.ApiModel
 data class UserVo constructor(
     val username: String,
     val nickname: String,
-    val identity: String
+    val identity: String,
+    val id:Int
 ) {}

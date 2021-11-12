@@ -8,5 +8,6 @@ data class OrderVo constructor(
     val peopleName: String?,
     val date: LocalDate?,
     val isDonation: Boolean?,
+    val id:Int?
 ) {
 }
