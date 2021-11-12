@@ -1,5 +1,6 @@
 package com.example.acount_cuit_pet.component.exception
 
+import cn.dev33.satoken.exception.NotLoginException
 import com.example.acount_cuit_pet.component.api.ApiResponse
 import com.example.acount_cuit_pet.component.api.ApiResult
 import lombok.extern.slf4j.Slf4j
@@ -54,5 +55,11 @@ class ExceptionHandlerController {
         val pos = getPos(bindException)
         val message = bindException.bindingResult.allErrors[0].defaultMessage ?: bindException.message
         return ApiResult.error(pos, message, ApiResponse.PARAM_ERROR)
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = [NotLoginException::class])
+    fun notLogin(e:NotLoginException):ApiResult<String>{
+        return ApiResult.get(ApiResponse.AUTHENTICATION_ERROR,null,"未登录")
     }
 }

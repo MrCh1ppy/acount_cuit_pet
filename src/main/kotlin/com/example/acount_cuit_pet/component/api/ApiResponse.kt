@@ -5,5 +5,6 @@ enum class ApiResponse(val code: Int) {
     UNKNOWN_ERROR(501),
     PARAM_ERROR(503),
     INNER_ERROR(504),
+    AUTHENTICATION_ERROR(505),
     PROJECT_ERROR(502);
 }

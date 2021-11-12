@@ -2,6 +2,7 @@ package com.example.acount_cuit_pet.controller
 
 import cn.dev33.satoken.annotation.SaCheckLogin
 import cn.dev33.satoken.annotation.SaCheckRole
+import cn.dev33.satoken.stp.StpUtil
 import com.example.acount_cuit_pet.component.api.ApiResult
 import com.example.acount_cuit_pet.entity.ProjectUser
 import com.example.acount_cuit_pet.param.user.UserLoginParam
@@ -54,5 +55,12 @@ class UserController {
     @PostMapping("/login")
     fun login(@RequestBody @NotNull @Valid param: UserLoginParam): ApiResult<LoginVo> {
         return ApiResult.ok(userService.login(param))
+    }
+
+    @GetMapping("/logOut")
+    fun loginOut():ApiResult<String>{
+        val lId = StpUtil.getLoginId()?:null
+        StpUtil.logout(lId)
+        return ApiResult.ok("注销成功")
     }
 }
