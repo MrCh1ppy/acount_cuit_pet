@@ -15,13 +15,9 @@ class ExceptionHandlerController {
 
     private fun getPos(e: Exception): String {
         return if (e.stackTrace.isNotEmpty()) {
-            val stackTraceElement = e.stackTrace[0]
-            val filerName = if (stackTraceElement.fileName == null) {
-                "未找到错误文件"
-            } else {
-                stackTraceElement.fileName
-            }
-            val number = stackTraceElement.lineNumber
+            val stackTraceElement = e.stackTrace[0]?:null
+            val filerName = stackTraceElement?.fileName ?: "未知错误文件"
+            val number = stackTraceElement?.lineNumber?:-1
             "$filerName:$number"
         } else {
             ""
@@ -31,8 +27,8 @@ class ExceptionHandlerController {
     fun baseHandler(e: Exception, apiCode: ApiResponse): ApiResult<String> {
         val pos = getPos(e)
         e.printStackTrace()
-        val message = if (e.message.isNullOrEmpty()) "未知错误" else e.message
-        return ApiResult.error(pos, message!!, apiCode)
+        val msg = e.message ?: "未知错误"
+        return ApiResult.error(pos, msg, apiCode)
     }
 
     @ExceptionHandler(value = [Exception::class])

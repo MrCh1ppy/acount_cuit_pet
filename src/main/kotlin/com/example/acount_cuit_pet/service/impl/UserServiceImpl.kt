@@ -24,16 +24,11 @@ class UserServiceImpl : UserService {
     @Autowired
     lateinit var userDao: UserDao
     override fun save(user: ProjectUser): ProjectUser? {
-        if (ifUserExist(user)) {
+        if (userDao.findByUsername(user.username?:"")!=null) {
             throw ProjectException("用户名已存在")
         }
         user.passwordMd5 = SaSecureUtil.md5(user.passwordMd5)
         return userDao.save(user)
-    }
-
-    private fun ifUserExist(user: ProjectUser): Boolean {
-        val target: String = if (user.username == null) "" else user.username!!
-        return userDao.findByUsername(target) != null
     }
 
     override fun drop(id: Int) {
