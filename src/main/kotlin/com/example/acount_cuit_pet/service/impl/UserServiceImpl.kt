@@ -3,7 +3,6 @@ package com.example.acount_cuit_pet.service.impl
 import cn.dev33.satoken.secure.SaSecureUtil
 import cn.dev33.satoken.stp.StpUtil
 import com.example.acount_cuit_pet.component.exception.ProjectException
-import com.example.acount_cuit_pet.component.token.LoginId
 import com.example.acount_cuit_pet.dao.UserDao
 import com.example.acount_cuit_pet.entity.ProjectUser
 import com.example.acount_cuit_pet.param.user.UserLoginParam
@@ -52,7 +51,7 @@ class UserServiceImpl : UserService {
         if(SaSecureUtil.md5(password)!=byUsername.passwordMd5){
             return LoginVo(null,null,null,"密码错误")
         }
-        StpUtil.login(LoginId(byUsername.identity))
+        StpUtil.login(byUsername.identity)
         return LoginVo(StpUtil.getTokenValue(),StpUtil.getTokenName(),byUsername.identity,"登陆成功")
     }
 
