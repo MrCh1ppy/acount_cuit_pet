@@ -52,7 +52,7 @@ class UserServiceImpl : UserService {
             return LoginVo(null,null,null,"密码错误")
         }
         StpUtil.login(byUsername.identity)
-        return LoginVo(StpUtil.getTokenValue(),StpUtil.getTokenName(),byUsername.identity,"登陆成功")
+        return LoginVo(StpUtil.getTokenValue(),StpUtil.getTokenName(),byUsername.identity,"登录成功")
     }
 
     private fun privateSelect(userSelectParam: UserSelectParam): Page<ProjectUser> {
