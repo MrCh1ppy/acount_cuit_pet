@@ -10,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class AcountCuitPetApplicationTests {
-    @Autowired
-    lateinit var userService: UserService
 
     @Autowired
     lateinit var userDao: UserDao
@@ -36,4 +34,6 @@ class AcountCuitPetApplicationTests {
         val apiResult = userController.select(param)
         println(apiResult.data?.content?.get(0)?.identity)
     }
+
+
 }

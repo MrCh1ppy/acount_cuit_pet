@@ -42,8 +42,10 @@ class OrderSelectSpecification constructor(param: OrderSelectParam) :
             predicateList.add(criteriaBuilder.between(root["money"], minValue, maxValue))
         }
         if (param.month != null && param.year != null) {
+            val maxYear=if(param.month!=12)param.year!!else param.year!!+1
+            val maxMonth=if (param.month!=12)param.month!!+1 else 1
             val min: LocalDate = LocalDate.of(param.year!!, param.month!!, 1)
-            val max: LocalDate = LocalDate.of(param.year!!, param.month!! + 1, 1)
+            val max: LocalDate = LocalDate.of(maxYear, maxMonth, 1)
             predicateList.add(criteriaBuilder.between(root["date"], min, max))
         }
         if (param.year != null && param.month == null) {
