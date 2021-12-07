@@ -2,7 +2,6 @@ package com.example.acount_cuit_pet.controller
 
 import cn.dev33.satoken.annotation.SaCheckLogin
 import cn.dev33.satoken.annotation.SaCheckRole
-import cn.dev33.satoken.stp.StpUtil
 import com.example.acount_cuit_pet.component.api.ApiResult
 import com.example.acount_cuit_pet.entity.ProjectUser
 import com.example.acount_cuit_pet.param.user.UserLoginParam
@@ -60,7 +59,7 @@ class UserController {
     @GetMapping("/logOut")
     @SaCheckLogin
     fun loginOut():ApiResult<String>{
-        StpUtil.logout()
+        userService.logOut()
         return ApiResult.ok("注销成功")
     }
 }

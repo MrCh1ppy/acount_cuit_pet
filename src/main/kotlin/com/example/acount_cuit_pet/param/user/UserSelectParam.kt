@@ -9,6 +9,7 @@ class UserSelectParam constructor(
     @NotNull current: Int=1,
     @NotNull pageSize: Int=10,
     val username: String?=null,
-    val nickname: String?=null
+    val nickname: String?=null,
+    val identity:String?=null
 ) : BasePageAbleParam(tempCurrent = current, tempPageSize = pageSize) {
 }

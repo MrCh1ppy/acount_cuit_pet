@@ -3,7 +3,6 @@ package com.example.acount_cuit_pet
 import com.example.acount_cuit_pet.controller.UserController
 import com.example.acount_cuit_pet.dao.UserDao
 import com.example.acount_cuit_pet.param.user.UserSelectParam
-import com.example.acount_cuit_pet.service.UserService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

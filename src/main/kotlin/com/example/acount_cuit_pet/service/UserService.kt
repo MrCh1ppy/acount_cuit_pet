@@ -12,4 +12,5 @@ interface UserService {
     fun drop(id: Int)
     fun select(userSelectParam: UserSelectParam): Page<UserVo>
     fun login(userLoginParam: UserLoginParam): LoginVo
+    fun logOut()
 }

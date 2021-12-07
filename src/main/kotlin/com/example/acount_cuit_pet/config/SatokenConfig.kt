@@ -14,7 +14,7 @@ class SatokenConfig {
         get() {
             val config = SaTokenConfig()
             config.tokenName = "token"
-            config.timeout = TimeUnit.MINUTES.toMillis(20)
+            config.timeout = TimeUnit.MINUTES.toMillis(GlobalVariablePool.TOKEN_LAST_TIME)
             config.activityTimeout = -1
             config.isConcurrent = true
             config.isShare = false

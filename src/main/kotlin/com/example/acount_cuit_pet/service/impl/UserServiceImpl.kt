@@ -2,7 +2,9 @@ package com.example.acount_cuit_pet.service.impl
 
 import cn.dev33.satoken.secure.SaSecureUtil
 import cn.dev33.satoken.stp.StpUtil
+import com.example.acount_cuit_pet.component.api.ApiResponse
 import com.example.acount_cuit_pet.component.exception.ProjectException
+import com.example.acount_cuit_pet.config.GlobalVariablePool
 import com.example.acount_cuit_pet.dao.UserDao
 import com.example.acount_cuit_pet.entity.ProjectUser
 import com.example.acount_cuit_pet.param.user.UserLoginParam
@@ -15,13 +17,18 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.ExampleMatcher
 import org.springframework.data.domain.Page
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Service
+import java.util.concurrent.TimeUnit
 
 @Service
 @Slf4j
 class UserServiceImpl : UserService {
     @Autowired
     lateinit var userDao: UserDao
+    @Autowired
+    lateinit var redisTemplate: RedisTemplate<String,String>
+
     override fun save(user: ProjectUser): ProjectUser? {
         if (userDao.findByUsername(user.username?:"")!=null) {
             throw ProjectException("用户名已存在")
@@ -51,8 +58,16 @@ class UserServiceImpl : UserService {
         if(SaSecureUtil.md5(password)!=byUsername.passwordMd5){
             return LoginVo(null,null,null,"密码错误")
         }
-        StpUtil.login(byUsername.identity)
+        val identity=byUsername.identity?:throw ProjectException("异常用户",ApiResponse.AUTHENTICATION_ERROR)
+        StpUtil.login(byUsername.username)
+        redisTemplate.opsForValue().set(userLoginParam.username,identity,GlobalVariablePool.TOKEN_LAST_TIME,TimeUnit.MINUTES)
         return LoginVo(StpUtil.getTokenValue(),StpUtil.getTokenName(),byUsername.identity,"登录成功")
+    }
+
+    override fun logOut() {
+        val idAsString = StpUtil.getLoginIdAsString()
+        redisTemplate.delete(idAsString)
+        StpUtil.logout()
     }
 
     private fun privateSelect(userSelectParam: UserSelectParam): Page<ProjectUser> {
@@ -60,6 +75,7 @@ class UserServiceImpl : UserService {
             .apply {
                 this.username = userSelectParam.username
                 this.nickname = userSelectParam.nickname
+                this.identity=userSelectParam.identity
             }
         /*设置模糊查找*/
         val matcher = ExampleMatcher.matching()
