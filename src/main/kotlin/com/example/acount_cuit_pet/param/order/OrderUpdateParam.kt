@@ -13,7 +13,7 @@ data class OrderUpdateParam(
     @get:NotNull(message = "日期不得为空")
     @get:PastOrPresent(message = "需要为过去或现在的时间")
     val date: Date,
-    @get:NotBlank(message = "是否捐款的信息不得为空")
+    @get:NotNull(message = "是否捐款的信息不得为空")
     val isDonation: Boolean,
     @get:NotBlank(message = "标题不得为空")
     val title: String,

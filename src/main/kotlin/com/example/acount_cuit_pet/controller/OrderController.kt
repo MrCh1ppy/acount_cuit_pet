@@ -63,6 +63,7 @@ class OrderController : ControllerHelper {
             this.id = param.id
             this.date = LocalDate.ofInstant(param.date.toInstant(), ZoneId.systemDefault())
             this.title = param.title
+            this.money=param.numOfMoney
         }
         val order = orderService.update(apply)
         return ApiResult.ok(order?.getVo())

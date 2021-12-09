@@ -36,7 +36,7 @@ class StpInterfaceImplKT:StpInterface {
      */
     override fun getRoleList(loginId: Any?, loginType: String?): List<String?> {
         val username = StpUtil.getLoginIdAsString()?:throw ProjectException("id为空",ApiResponse.INNER_ERROR)
-        val identity = redisTemplate.opsForValue().get(username)
+        val identity = redisTemplate.opsForValue().get(username)?: throw ProjectException("用户令牌丢失",ApiResponse.AUTHENTICATION_ERROR)
         val value = StpUtil.getTokenValue()
         log.info("{}验证通过，身份为{},令牌值为{}",username,identity,value)
         return mutableListOf(identity)
